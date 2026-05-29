@@ -1,0 +1,14 @@
+{
+  "name": "morphix",
+  "version": "1.0.0",
+  "description": "Morphix is a Discord.js v14 temporary voice channel bot.",
+  "main": "Morphix.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node Morphix.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.22.1",
+    "dotenv": "^16.6.1"
+  }
+}
