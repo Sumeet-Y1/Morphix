@@ -12,6 +12,7 @@ const {
   PermissionsBitField,
   StringSelectMenuBuilder,
 } = require("discord.js");
+const http = require("node:http");
 
 /*
   Install:
@@ -25,6 +26,7 @@ const {
 */
 
 const BOT_TOKEN = process.env.BOT_TOKEN || "YOUR_BOT_TOKEN_HERE";
+const PORT = Number(process.env.PORT || 3000);
 const DEBOUNCE_MS = 2500;
 
 const TIER_CONFIG = {
@@ -787,5 +789,20 @@ process.on("uncaughtException", (error) => {
 if (!BOT_TOKEN || BOT_TOKEN === "YOUR_BOT_TOKEN_HERE") {
   throw new Error("Missing BOT_TOKEN. Set it in your environment or .env file.");
 }
+
+const server = http.createServer((request, response) => {
+  if (request.url === "/" || request.url === "/health") {
+    response.writeHead(200, { "Content-Type": "text/plain" });
+    response.end("Morphix is alive");
+    return;
+  }
+
+  response.writeHead(404, { "Content-Type": "text/plain" });
+  response.end("Not found");
+});
+
+server.listen(PORT, () => {
+  console.log(`Morphix health server listening on port ${PORT}`);
+});
 
 client.login(BOT_TOKEN);
